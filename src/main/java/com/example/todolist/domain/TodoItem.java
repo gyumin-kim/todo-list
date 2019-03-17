@@ -1,6 +1,7 @@
 package com.example.todolist.domain;
 
 import java.time.LocalDateTime;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,7 +46,7 @@ public class TodoItem {
   private Integer priority;
 
   // 내용
-  @OneToOne
-  @JoinColumn(name = "todo_item_content_id")
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "TODO_ITEM_CONTENT_ID")
   private TodoItemContent todoItemContent;
 }
