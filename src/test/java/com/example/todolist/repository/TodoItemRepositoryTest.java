@@ -22,15 +22,18 @@ public class TodoItemRepositoryTest {
 
   @Test
   public void test_TodoItem생성_Id로_찾기_동일여부() {
-    TodoItem todoItem = new TodoItem();
-    todoItem.setId(1L);
-    todoItem.setTitle("제목 테스트");
-    todoItem.setCompleted(false);
-    todoItem.setCreatedDate(LocalDateTime.now());
     TodoItemContent content = new TodoItemContent();
     content.setContents("내용 테스트");
-    todoItem.setTodoItemContent(content);
-    todoItem.setPriority(1);
+
+    TodoItem todoItem = TodoItem.builder()
+        .id(1L)
+        .title("제목 테스트")
+        .isCompleted(false)
+        .createdDate(LocalDateTime.now())
+        .todoItemContent(content)
+        .priority(1)
+        .build();
+
     todoItemRepository.save(todoItem);
 
     assertThat(todoItemRepository.getOne(1L).getId())
@@ -39,15 +42,18 @@ public class TodoItemRepositoryTest {
 
   @Test
   public void test_TodoItem생성_title로_찾기_동일여부() {
-    TodoItem todoItem = new TodoItem();
-    todoItem.setId(1L);
-    todoItem.setTitle("제목 테스트");
-    todoItem.setCompleted(false);
-    todoItem.setCreatedDate(LocalDateTime.now());
     TodoItemContent content = new TodoItemContent();
     content.setContents("내용 테스트");
-    todoItem.setTodoItemContent(content);
-    todoItem.setPriority(1);
+
+    TodoItem todoItem = TodoItem.builder()
+        .id(1L)
+        .title("제목 테스트")
+        .isCompleted(false)
+        .createdDate(LocalDateTime.now())
+        .todoItemContent(content)
+        .priority(1)
+        .build();
+
     todoItemRepository.save(todoItem);
 
     assertThat(todoItemRepository.findByTitle("제목 테스트").getId())

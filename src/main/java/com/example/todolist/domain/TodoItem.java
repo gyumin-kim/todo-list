@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,7 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "TODO_ITEM")
+@Builder
 @Getter
 @Setter
 public class TodoItem {
@@ -46,7 +48,7 @@ public class TodoItem {
   private Integer priority;
 
   // 내용
-  //TODO: @OneToOne 대신 @Embeddable로 바꾸는것 고려
+  //TODO: @OneToOne 대신 @Embeddable로 바꾸는 것 고려
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "TODO_ITEM_CONTENT_ID")
   private TodoItemContent todoItemContent;
