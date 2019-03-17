@@ -46,6 +46,7 @@ public class TodoItem {
   private Integer priority;
 
   // 내용
+  //TODO: @OneToOne 대신 @Embeddable로 바꾸는것 고려
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "TODO_ITEM_CONTENT_ID")
   private TodoItemContent todoItemContent;
