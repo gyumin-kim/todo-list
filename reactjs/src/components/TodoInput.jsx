@@ -25,7 +25,7 @@ class TodoInput extends Component {
     }
 
     fetch("/api/item", {
-      method: 'POST',
+      method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
