@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TodoItem from './TodoItem';
 
-class Todo3rdPriority extends Component {
+class Todo1stPriority extends Component {
   state = {
     items: [],
   }
@@ -19,7 +19,7 @@ class Todo3rdPriority extends Component {
   }
 
   fetchItemlist() {
-    fetch("/api/items/3", {
+    fetch("/api/items/1", {
       method: "GET",
     }).then(res => res.json()
     .then(data => {
@@ -27,7 +27,7 @@ class Todo3rdPriority extends Component {
 
       // 우선순위(열)마다 다른 style을 여기에 적용한다.
       let itemStyle = {
-        backgroundColor: '#d8f5d1',
+        backgroundColor: '#f5d7d7',
       };
       const items = data.map(item => {
         return <TodoItem
@@ -48,4 +48,4 @@ class Todo3rdPriority extends Component {
   }
 }
 
-export default Todo3rdPriority;
+export default Todo1stPriority;

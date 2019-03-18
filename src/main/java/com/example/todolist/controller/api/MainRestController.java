@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,7 @@ public class MainRestController {
         .title(inputDto.getTitle())
         .isCompleted(false)
         .createdDate(LocalDateTime.now())
+        .priority(inputDto.getPriority())
         .build();
 
     return new ResponseEntity<>(mainService.addTodoItem(todoItem), HttpStatus.CREATED);
@@ -46,10 +48,18 @@ public class MainRestController {
 
   @GetMapping("/items")
   public List<TodoItem> loadAllTodoItems() {
-    log.info("SERVICE -- loadAllTodoItems() ...");
-    List<TodoItem> items = mainService.getTodoItems();
+    List<TodoItem> items = mainService.getAllTodoItems();
     for (TodoItem item : items) {
       log.info(item.getId() + ": " + item.getTitle());
+    }
+    return items;
+  }
+
+  @GetMapping("/items/{priority}")
+  public List<TodoItem> loadTodoItemsPriority(@PathVariable String priority) {
+    List<TodoItem> items = mainService.getTodoItemsPriority(Integer.parseInt(priority));
+    for (TodoItem item : items) {
+      log.info("우선순위(" + item.getPriority() + ") No." + item.getId() + ": " + item.getTitle());
     }
     return items;
   }

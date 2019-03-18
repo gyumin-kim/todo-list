@@ -8,6 +8,7 @@ public class InputDto {
 
   private String title;
   private String content;
+  private Integer priority;
 
   public String getTitle() {
     return title;
@@ -23,5 +24,13 @@ public class InputDto {
 
   public void setContent(String content) {
     this.content = content;
+  }
+
+  public Integer getPriority() {
+    return priority;
+  }
+
+  public void setPriority(Integer priority) {
+    this.priority = priority;
   }
 }

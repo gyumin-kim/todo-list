@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+// 모든 TodoItem에 공통적으로 적용할 style
 const TodoItemDiv = styled.div`
   width: 200px;
   height: 130px;
-  background-color: papayawhip;
   text-align: center;
 `;
 
@@ -22,7 +22,7 @@ class TodoItem extends Component {
     const { id, completed, title, content, createdAt } = this.props;
 
     return (
-      <TodoItemDiv>
+      <TodoItemDiv style={this.props.customStyle}>
         <IdP>{id}</IdP>
         <p>{{completed} === true ? '완료' : '미완료'}</p>
         <TitleHeader>{title}</TitleHeader>

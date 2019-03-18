@@ -25,7 +25,12 @@ public class MainService {
   }
 
   @Transactional(readOnly = true)
-  public List<TodoItem> getTodoItems() {
+  public List<TodoItem> getAllTodoItems() {
     return todoItemRepository.findAll();
+  }
+
+  @Transactional(readOnly = true)
+  public List<TodoItem> getTodoItemsPriority(int priority) {
+    return todoItemRepository.findAllByPriority(priority);
   }
 }
