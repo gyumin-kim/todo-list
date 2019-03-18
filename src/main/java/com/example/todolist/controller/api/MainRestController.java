@@ -6,15 +6,20 @@ import com.example.todolist.service.MainService;
 import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Gyumin Kim
  * @since 2019-03-17
  */
-@RestController("/api")
+@RestController
+@RequestMapping(path = "/api",
+                produces = "application/json")
+@CrossOrigin(origins = "*")
 public class MainRestController {
 
   private MainService mainService;
