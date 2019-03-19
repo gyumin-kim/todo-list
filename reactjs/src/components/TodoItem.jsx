@@ -27,9 +27,17 @@ const ContentPInput = styled.input`
 `;
 
 class TodoItem extends Component {
-  state = {
-    isUpdating: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      isUpdating: false,
+      isChecked: this.props.completed,
+    }
   }
+  // state = {
+  //   isUpdating: false,
+  //   isChecked: this.props.completed,
+  // }
 
   render() {
     const { id, completed, title, content, createdAt } = this.props;
@@ -51,7 +59,8 @@ class TodoItem extends Component {
         <IdP>{id}</IdP>
         <button onClick={this.deleteItem.bind(this)}>삭제</button>
         <button onClick={this.toggleUpdate.bind(this)}>수정</button>
-        <p>{{completed} === true ? '완료' : '미완료'}</p>
+        {/* <p>{{completed} === true ? '완료' : '미완료'}</p> */}
+        <input type="checkbox" checked={this.state.isChecked} onChange={this.toggleCompleteCheckbox.bind(this)} />
  
         {titleVar}<br/>
         {contentVar}<br/>
@@ -99,6 +108,13 @@ class TodoItem extends Component {
       window.location.href = '/'
     }).catch(err => {
       console.log(err)
+    })
+  }
+
+  toggleCompleteCheckbox() {
+    console.log(`${this.props.id}번 아이템 체크박스 클릭`)
+    this.setState({
+      isChecked: !this.state.isChecked,
     })
   }
 }

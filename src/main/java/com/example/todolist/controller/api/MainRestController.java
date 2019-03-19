@@ -77,7 +77,7 @@ public class MainRestController {
   }
 
   /**
-   * {@param updateDto}의 내용을 {@param id}에 해당하는 TodoItem에 반영 (제목/내용 수정)
+   * {@param id}에 해당하는 TodoItem에 {@param updateDto}의 내용을 반영 (제목/내용 수정)
    * @param id TodoItem을 가져오기 위한 id
    * @param updateDto 수정할 내용이 담긴 input 데이터
    * @return 수정된 TodoItem을 감싼 ResponseEntity
