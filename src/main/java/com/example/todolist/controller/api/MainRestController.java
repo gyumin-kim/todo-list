@@ -3,6 +3,7 @@ package com.example.todolist.controller.api;
 import com.example.todolist.domain.TodoItem;
 import com.example.todolist.domain.TodoItemContent;
 import com.example.todolist.dto.InputDto;
+import com.example.todolist.dto.UpdateDto;
 import com.example.todolist.service.MainService;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,8 +38,13 @@ public class MainRestController {
     this.mainService = mainService;
   }
 
+  /**
+   * {@param inputDto}의 내용을 새로운 TodoItem으로 등록(생성)
+   * @param inputDto 새로 등록할 내용이 담긴 input 데이터
+   * @return 새로 등록한 TodoItem을 감싼 ResponseEntity
+   */
   @PostMapping(path = "/item",
-              produces = "application/json")
+      produces = "application/json")
   public ResponseEntity<?> createTodoItem(@RequestBody InputDto inputDto) {
 
     TodoItemContent todoItemContent = TodoItemContent.builder()
@@ -54,12 +61,14 @@ public class MainRestController {
     return new ResponseEntity<>(mainService.addTodoItem(todoItem), HttpStatus.CREATED);
   }
 
+  /**
+   * 우선순위가 {@param priority}인 TodoItem들을 가져온다
+   * @param priority 우선순위(없음/3/2/1)
+   * @return 해당 우선순위를 갖는 TodoItem의 List
+   */
   @GetMapping("/items/{priority}")
   public ResponseEntity<?> loadTodoItemsPriority(@PathVariable String priority) {
     List<TodoItem> items = mainService.getTodoItemsPriority(Integer.parseInt(priority));
-    for (TodoItem item : items) {
-      log.info("우선순위(" + item.getPriority() + ") No." + item.getId() + ": " + item.getTitle());
-    }
 
     if (items != null) {
       return new ResponseEntity<>(items, HttpStatus.OK);
@@ -67,10 +76,31 @@ public class MainRestController {
     return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
   }
 
+  /**
+   * {@param updateDto}의 내용을 {@param id}에 해당하는 TodoItem에 반영 (제목/내용 수정)
+   * @param id TodoItem을 가져오기 위한 id
+   * @param updateDto 수정할 내용이 담긴 input 데이터
+   * @return 수정된 TodoItem을 감싼 ResponseEntity
+   */
+  @PatchMapping(path = "/item/{id}", consumes = "application/json")
+  public ResponseEntity<?> patchTodoItem(@PathVariable Long id, @RequestBody UpdateDto updateDto) {
+
+    TodoItem todoItem = mainService.getTodoItemId(id);
+    if (todoItem == null) {
+      return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    return new ResponseEntity<>(mainService.modifyTodoItem(id, updateDto), HttpStatus.OK);
+  }
+
+  /**
+   * {@param id}에 해당하는 TodoItem을 삭제
+   * @param id 삭제할 TodoItem의 id
+   */
   @DeleteMapping("/item/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteTodoItem(@PathVariable Long id) {
-    log.info(id + "번 item 삭제 요청 받음");
+
     try {
       mainService.removeTodoItem(id);
     } catch (EmptyResultDataAccessException e) {

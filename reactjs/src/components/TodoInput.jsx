@@ -6,11 +6,10 @@ class TodoInput extends Component {
       <div>
         <form onSubmit={this.createNewTodo.bind(this)}>
           <label htmlFor="title">제목</label>
-          <input type="text" id="title"
-                 ref={ref => {this._titleInput = ref}} /><br/>
+          <input type="text" id="title" ref={ref => {this._titleInput = ref}} /><br/>
           <label htmlFor="contents">내용</label>
-          <input type="text" id="contents"
-                 ref={ref => {this._contentsInput = ref}} /><br/>
+          <input type="text" id="contents" ref={ref => {this._contentsInput = ref}} /><br/>
+          
           <select
             ref={select => this._priority = select}>
             <option value="0">-</option>
