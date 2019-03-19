@@ -35,7 +35,7 @@ class TodoNoPriority extends Component {
                   id={item.id}
                   completed={item.completed}
                   title={item.title}
-                  content={item.todoItemContent}
+                  content={item.todoItemContent.contents}
                   createdAt={item.createdDate}
                   customStyle={itemStyle} />
       });

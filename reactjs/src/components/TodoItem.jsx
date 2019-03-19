@@ -4,7 +4,7 @@ import styled from 'styled-components';
 // 모든 TodoItem에 공통적으로 적용할 style
 const TodoItemDiv = styled.div`
   width: 200px;
-  height: 130px;
+  height: 160px;
   text-align: center;
 `;
 

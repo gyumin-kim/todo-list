@@ -7,7 +7,7 @@ package com.example.todolist.dto;
 public class InputDto {
 
   private String title;
-  private String content;
+  private String contents;
   private Integer priority;
 
   public String getTitle() {
@@ -18,12 +18,12 @@ public class InputDto {
     this.title = title;
   }
 
-  public String getContent() {
-    return content;
+  public String getContents() {
+    return contents;
   }
 
-  public void setContent(String content) {
-    this.content = content;
+  public void setContents(String contents) {
+    this.contents = contents;
   }
 
   public Integer getPriority() {

@@ -1,6 +1,7 @@
 package com.example.todolist.controller.api;
 
 import com.example.todolist.domain.TodoItem;
+import com.example.todolist.domain.TodoItemContent;
 import com.example.todolist.dto.InputDto;
 import com.example.todolist.service.MainService;
 import java.time.LocalDateTime;
@@ -36,23 +37,18 @@ public class MainRestController {
               produces = "application/json")
   public ResponseEntity<?> createTodoItem(@RequestBody InputDto inputDto) {
 
+    TodoItemContent todoItemContent = TodoItemContent.builder()
+        .contents(inputDto.getContents())
+        .build();
     TodoItem todoItem = TodoItem.builder()
         .title(inputDto.getTitle())
+        .todoItemContent(todoItemContent)
         .isCompleted(false)
         .createdDate(LocalDateTime.now())
         .priority(inputDto.getPriority())
         .build();
 
     return new ResponseEntity<>(mainService.addTodoItem(todoItem), HttpStatus.CREATED);
-  }
-
-  @GetMapping("/items")
-  public List<TodoItem> loadAllTodoItems() {
-    List<TodoItem> items = mainService.getAllTodoItems();
-    for (TodoItem item : items) {
-      log.info(item.getId() + ": " + item.getTitle());
-    }
-    return items;
   }
 
   @GetMapping("/items/{priority}")
@@ -63,4 +59,13 @@ public class MainRestController {
     }
     return items;
   }
+
+//  @GetMapping("/items")
+//  public List<TodoItem> loadAllTodoItems() {
+//    List<TodoItem> items = mainService.getAllTodoItems();
+//    for (TodoItem item : items) {
+//      log.info(item.getId() + ": " + item.getTitle());
+//    }
+//    return items;
+//  }
 }

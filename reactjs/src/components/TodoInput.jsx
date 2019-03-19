@@ -5,8 +5,12 @@ class TodoInput extends Component {
     return (
       <div>
         <form onSubmit={this.createNewTodo.bind(this)}>
-          <input type="text" 
-                 ref={ref => {this._titleInput = ref}} />
+          <label for="title">제목</label>
+          <input type="text" id="title"
+                 ref={ref => {this._titleInput = ref}} /><br/>
+          <label for="contents">내용</label>
+          <input type="text" id="contents"
+                 ref={ref => {this._contentsInput = ref}} /><br/>
           <select
             ref={select => this._priority = select}>
             <option value="0">-</option>
@@ -23,6 +27,7 @@ class TodoInput extends Component {
 
   createNewTodo(e) {
     let title = this._titleInput.value;
+    let contents = this._contentsInput.value;
     let priority = this._priority.value;
     
     if (title === "") {
@@ -39,6 +44,7 @@ class TodoInput extends Component {
       body: JSON.stringify({
         title: title,
         priority: priority,
+        contents: contents,
       })
     }).then(res => {
       console.log(res)
