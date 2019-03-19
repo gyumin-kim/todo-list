@@ -7,6 +7,7 @@ import com.example.todolist.service.MainService;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -66,16 +68,13 @@ public class MainRestController {
   }
 
   @DeleteMapping("/item/{id}")
-  public void deleteTodoItem(@PathVariable int id) {
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void deleteTodoItem(@PathVariable Long id) {
     log.info(id + "번 item 삭제 요청 받음");
+    try {
+      mainService.removeTodoItem(id);
+    } catch (EmptyResultDataAccessException e) {
+      e.printStackTrace();
+    }
   }
-
-//  @GetMapping("/items")
-//  public List<TodoItem> loadAllTodoItems() {
-//    List<TodoItem> items = mainService.getAllTodoItems();
-//    for (TodoItem item : items) {
-//      log.info(item.getId() + ": " + item.getTitle());
-//    }
-//    return items;
-//  }
 }

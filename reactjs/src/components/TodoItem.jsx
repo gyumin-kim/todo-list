@@ -39,6 +39,7 @@ class TodoItem extends Component {
     }).then(res => {
       console.log(res)
       console.log(`${this.props.id}번 item 삭제 요청`)
+      window.location.href = '/'
     }).catch(err => {
       console.log(err)
     })
