@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,12 +53,21 @@ public class MainRestController {
   }
 
   @GetMapping("/items/{priority}")
-  public List<TodoItem> loadTodoItemsPriority(@PathVariable String priority) {
+  public ResponseEntity<?> loadTodoItemsPriority(@PathVariable String priority) {
     List<TodoItem> items = mainService.getTodoItemsPriority(Integer.parseInt(priority));
     for (TodoItem item : items) {
       log.info("우선순위(" + item.getPriority() + ") No." + item.getId() + ": " + item.getTitle());
     }
-    return items;
+
+    if (items != null) {
+      return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+  }
+
+  @DeleteMapping("/item/{id}")
+  public void deleteTodoItem(@PathVariable int id) {
+    log.info(id + "번 item 삭제 요청 받음");
   }
 
 //  @GetMapping("/items")

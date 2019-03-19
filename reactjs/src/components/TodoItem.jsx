@@ -4,7 +4,7 @@ import styled from 'styled-components';
 // 모든 TodoItem에 공통적으로 적용할 style
 const TodoItemDiv = styled.div`
   width: 200px;
-  height: 160px;
+  height: 190px;
   text-align: center;
 `;
 
@@ -24,12 +24,24 @@ class TodoItem extends Component {
     return (
       <TodoItemDiv style={this.props.customStyle}>
         <IdP>{id}</IdP>
+        <button onClick={this.deleteItem.bind(this)}>삭제</button>
         <p>{{completed} === true ? '완료' : '미완료'}</p>
         <TitleHeader>{title}</TitleHeader>
         <p>{content}</p>
         <p>{createdAt}</p>
       </TodoItemDiv>
     );
+  }
+
+  deleteItem() {
+    fetch(`/api/item/${this.props.id}`, {
+      method: "DELETE",
+    }).then(res => {
+      console.log(res)
+      console.log(`${this.props.id}번 item 삭제 요청`)
+    }).catch(err => {
+      console.log(err)
+    })
   }
 }
 

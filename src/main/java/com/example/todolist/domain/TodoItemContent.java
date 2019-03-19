@@ -27,7 +27,6 @@ public class TodoItemContent {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "TODO_ITEM_CONTENT_ID")
   private Long id;
 
   // 내용
