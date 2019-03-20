@@ -1,5 +1,7 @@
 package com.example.todolist.dto;
 
+import java.time.LocalDateTime;
+
 /**
  * @author Gyumin Kim
  * @since 2019-03-17
@@ -9,6 +11,7 @@ public class InputDto {
   private String title;
   private String contents;
   private Integer priority;
+  private LocalDateTime deadline;
 
   public String getTitle() {
     return title;
@@ -32,5 +35,13 @@ public class InputDto {
 
   public void setPriority(Integer priority) {
     this.priority = priority;
+  }
+
+  public LocalDateTime getDeadline() {
+    return deadline;
+  }
+
+  public void setDeadline(LocalDateTime deadline) {
+    this.deadline = deadline;
   }
 }

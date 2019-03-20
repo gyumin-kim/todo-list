@@ -20,7 +20,8 @@ const TitleHeader = styled.h2`
 const TitleHeaderInput = styled.input`
 `;
 
-const ContentP = styled.p`
+const CustomP = styled.p`
+  margin: 0;
 `;
 
 const ContentPInput = styled.input`
@@ -37,17 +38,24 @@ class TodoItem extends Component {
   }
 
   render() {
-    const { id, title, content, createdAt } = this.props;
+    const { id, title, content, createdAt, deadline } = this.props;
     let titleVar;
     let contentVar;
 
     let isUpdating = this.state.isUpdating;
     if (!isUpdating) {
       titleVar = <TitleHeader>{title}</TitleHeader>
-      contentVar = <ContentP>{content}</ContentP>
+      contentVar = <CustomP>{content}</CustomP>
     } else {
       titleVar = <TitleHeaderInput type="text" defaultValue={title} className="title-input" />
       contentVar = <ContentPInput type="text" defaultValue={content} className="content-input" />
+    }
+
+    let deadlineDiv;
+    if (deadline !== null) {
+      deadlineDiv = <CustomP>마감기한: {deadline}</CustomP>
+    } else {
+      deadlineDiv = '';
     }
 
     return (
@@ -61,13 +69,14 @@ class TodoItem extends Component {
           <option value="1">1순위</option>
           <option value="2">2순위</option>
           <option value="3">3순위</option>
-        </select>
+        </select> <br/>
  
         {titleVar}<br/>
         {contentVar}<br/>
         {isUpdating === true ? <button type="submit" onClick={this.submitUpdate.bind(this)}>수정 완료</button> : ''}
 
-        <p>{createdAt}</p>
+        <CustomP>생성일: {createdAt}</CustomP>
+        <CustomP>{deadlineDiv}</CustomP>
       </TodoItemDiv>
     );
   }

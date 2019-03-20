@@ -56,6 +56,7 @@ public class MainRestController {
         .todoItemContent(todoItemContent)
         .isCompleted(false)
         .createdDate(LocalDateTime.now())
+        .deadline(inputDto.getDeadline())
         .priority(inputDto.getPriority())
         .build();
 

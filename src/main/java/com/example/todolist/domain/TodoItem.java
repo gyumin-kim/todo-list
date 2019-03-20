@@ -51,7 +51,7 @@ public class TodoItem {
   private LocalDateTime createdDate;
 
   // 마감기한
-  private LocalDateTime deadLine;
+  private LocalDateTime deadline;
 
   // 우선순위
   private Integer priority;

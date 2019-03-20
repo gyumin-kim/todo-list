@@ -38,6 +38,7 @@ class Todo1stPriority extends Component {
                   content={item.todoItemContent.contents}
                   priority={item.priority}
                   createdAt={item.createdDate}
+                  deadline={item.deadline}
                   customStyle={itemStyle} />
       });
       this.setState({
