@@ -32,6 +32,7 @@ class TodoItem extends Component {
     this.state = {
       isUpdating: false,
       isChecked: this.props.completed === true ? "true" : "false",
+      priorityValue: this.props.priority,
     }
   }
 
@@ -54,7 +55,13 @@ class TodoItem extends Component {
         <IdP>{id}</IdP>
         <button onClick={this.deleteItem.bind(this)}>삭제</button>
         <button onClick={this.toggleUpdate.bind(this)}>수정</button>
-        <input type="checkbox" checked={this.state.isChecked === "true" ? true : false} onChange={this.toggleCompleteCheckbox.bind(this)} /> <br/>
+        <input type="checkbox" checked={this.state.isChecked === "true" ? true : false} onChange={this.toggleCompleteCheckbox.bind(this)} />
+        <select value={this.state.priorityValue} onChange={this.changePriority.bind(this)} >
+          <option value="0">-</option>
+          <option value="1">1순위</option>
+          <option value="2">2순위</option>
+          <option value="3">3순위</option>
+        </select>
  
         {titleVar}<br/>
         {contentVar}<br/>
@@ -111,7 +118,7 @@ class TodoItem extends Component {
       isChecked: this.state.isChecked === "true" ? "false" : "true",
     })
 
-    fetch(`/api/item/${this.props.id}/complete`, {
+    fetch(`/api/item/${this.props.id}`, {
       method: "PATCH", 
       headers: {
         "Content-Type": "application/json",
@@ -121,6 +128,27 @@ class TodoItem extends Component {
       }),
     }).then(res => {;
       console.log(res);
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  async changePriority(evt) {
+    await this.setState({
+      priorityValue: parseInt(evt.target.value),
+    })
+
+    fetch(`/api/item/${this.props.id}`, {
+      method: "PATCH", 
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        priority: this.state.priorityValue,
+      }),
+    }).then(res => {;
+      console.log(res);
+      window.location.href = '/'
     }).catch(err => {
       console.log(err);
     })

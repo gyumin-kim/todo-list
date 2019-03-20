@@ -36,6 +36,7 @@ class Todo2ndPriority extends Component {
                   completed={item.completed}
                   title={item.title}
                   content={item.todoItemContent.contents}
+                  priority={item.priority}
                   createdAt={item.createdDate}
                   customStyle={itemStyle} />
       });

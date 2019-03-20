@@ -1,7 +1,6 @@
 package com.example.todolist.service;
 
 import com.example.todolist.domain.TodoItem;
-import com.example.todolist.dto.UpdateDto;
 import com.example.todolist.repository.TodoItemRepository;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -38,12 +37,27 @@ public class MainService {
   }
 
   @Transactional
-  public TodoItem modifyTodoItem(Long id, UpdateDto updateDto) {
+  public TodoItem modifyTitleContents(Long id, String title, String contents) {
     TodoItem todoItem = todoItemRepository.getOne(id);
-    String updateTitle = updateDto.getTitle();
-    String updateContents = updateDto.getContents();
-    todoItem.setTitle(updateTitle);
-    todoItem.getTodoItemContent().setContents(updateContents);
+    todoItem.setTitle(title);
+    todoItem.getTodoItemContent().setContents(contents);
+
+    return todoItemRepository.save(todoItem);
+  }
+
+  @Transactional
+  public TodoItem modifyIsChecked(Long id, String isCompleted) {
+    TodoItem todoItem = todoItemRepository.getOne(id);
+    boolean isCompletedBool = isCompleted.equals("true");
+    todoItem.setCompleted(isCompletedBool);
+
+    return todoItemRepository.save(todoItem);
+  }
+
+  @Transactional
+  public TodoItem modifyPriority(Long id, int newPriority) {
+    TodoItem todoItem = todoItemRepository.getOne(id);
+    todoItem.setPriority(newPriority);
 
     return todoItemRepository.save(todoItem);
   }
@@ -51,14 +65,5 @@ public class MainService {
   @Transactional
   public void removeTodoItem(Long id) {
     todoItemRepository.deleteById(id);
-  }
-
-  @Transactional
-  public TodoItem toggleComplete(Long id, String isCompleted) {
-    TodoItem todoItem = todoItemRepository.getOne(id);
-    boolean isCompletedBool = isCompleted.equals("true");
-    todoItem.setCompleted(isCompletedBool);
-
-    return todoItemRepository.save(todoItem);
   }
 }
