@@ -4,6 +4,7 @@ import com.example.todolist.domain.TodoItem;
 import com.example.todolist.dto.UpdateDto;
 import com.example.todolist.repository.TodoItemRepository;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 2019-03-17
  */
 @Service
+@Slf4j
 public class MainService {
 
   private TodoItemRepository todoItemRepository;
@@ -43,11 +45,20 @@ public class MainService {
     todoItem.setTitle(updateTitle);
     todoItem.getTodoItemContent().setContents(updateContents);
 
-    return todoItemRepository.save(todoItem); //TODO: 최종적으로 update된 TodoItem 객체를 매개변수로 넣어주면 된다.
+    return todoItemRepository.save(todoItem);
   }
 
   @Transactional
   public void removeTodoItem(Long id) {
     todoItemRepository.deleteById(id);
+  }
+
+  @Transactional
+  public TodoItem toggleComplete(Long id, String isCompleted) {
+    TodoItem todoItem = todoItemRepository.getOne(id);
+    boolean isCompletedBool = isCompleted.equals("true");
+    todoItem.setCompleted(isCompletedBool);
+
+    return todoItemRepository.save(todoItem);
   }
 }

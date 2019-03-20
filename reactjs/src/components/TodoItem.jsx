@@ -31,22 +31,17 @@ class TodoItem extends Component {
     super(props);
     this.state = {
       isUpdating: false,
-      isChecked: this.props.completed,
+      isChecked: this.props.completed === true ? "true" : "false",
     }
   }
-  // state = {
-  //   isUpdating: false,
-  //   isChecked: this.props.completed,
-  // }
 
   render() {
-    const { id, completed, title, content, createdAt } = this.props;
+    const { id, title, content, createdAt } = this.props;
     let titleVar;
     let contentVar;
 
     let isUpdating = this.state.isUpdating;
     if (!isUpdating) {
-      //TODO: title, content를 하나의 변수에 다 넣어보자
       titleVar = <TitleHeader>{title}</TitleHeader>
       contentVar = <ContentP>{content}</ContentP>
     } else {
@@ -59,8 +54,7 @@ class TodoItem extends Component {
         <IdP>{id}</IdP>
         <button onClick={this.deleteItem.bind(this)}>삭제</button>
         <button onClick={this.toggleUpdate.bind(this)}>수정</button>
-        {/* <p>{{completed} === true ? '완료' : '미완료'}</p> */}
-        <input type="checkbox" checked={this.state.isChecked} onChange={this.toggleCompleteCheckbox.bind(this)} />
+        <input type="checkbox" checked={this.state.isChecked === "true" ? true : false} onChange={this.toggleCompleteCheckbox.bind(this)} /> <br/>
  
         {titleVar}<br/>
         {contentVar}<br/>
@@ -111,10 +105,24 @@ class TodoItem extends Component {
     })
   }
 
-  toggleCompleteCheckbox() {
-    console.log(`${this.props.id}번 아이템 체크박스 클릭`)
-    this.setState({
-      isChecked: !this.state.isChecked,
+  async toggleCompleteCheckbox() {
+    console.log(`${this.props.id}번 아이템 완료 체크박스 클릭`)
+    await this.setState({
+      isChecked: this.state.isChecked === "true" ? "false" : "true",
+    })
+
+    fetch(`/api/item/${this.props.id}/complete`, {
+      method: "PATCH", 
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        isChecked: this.state.isChecked,
+      }),
+    }).then(res => {;
+      console.log(res);
+    }).catch(err => {
+      console.log(err);
     })
   }
 }

@@ -33,7 +33,6 @@ class TodoNoPriority extends Component {
         return <TodoItem
                   key={item.id}
                   id={item.id}
-                  completed={item.completed}
                   title={item.title}
                   content={item.todoItemContent.contents}
                   createdAt={item.createdDate}
