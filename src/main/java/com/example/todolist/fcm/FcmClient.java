@@ -27,6 +27,9 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class FcmClient {
 
+  public FcmClient() {
+  }
+
   public FcmClient(FcmSettings settings) {
     Path p = Paths.get(settings.getServiceAccountFile());
     try (InputStream serviceAccount = Files.newInputStream(p)) {
