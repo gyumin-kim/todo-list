@@ -6,6 +6,7 @@ const TodoItemDiv = styled.div`
   width: 300px;
   height: 220px;
   text-align: center;
+  border-radius: 5%;
 `;
 
 const IdP = styled.p`
@@ -53,7 +54,7 @@ class TodoItem extends Component {
 
     let deadlineDiv;
     if (deadline !== null) {
-      deadlineDiv = <CustomP>마감기한: {deadline}</CustomP>
+      deadlineDiv = <span>마감기한: {deadline}</span>
     } else {
       deadlineDiv = '';
     }
