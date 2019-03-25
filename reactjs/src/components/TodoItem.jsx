@@ -4,7 +4,7 @@ import styled from 'styled-components';
 // 모든 TodoItem에 공통적으로 적용할 style
 const TodoItemDiv = styled.div`
   width: 300px;
-  height: 220px;
+  height: 200px;
   text-align: center;
   border-radius: 5%;
 `;
@@ -18,14 +18,8 @@ const TitleHeader = styled.h2`
   font-weight: bold;
 `;
 
-const TitleHeaderInput = styled.input`
-`;
-
 const CustomP = styled.p`
   margin: 0;
-`;
-
-const ContentPInput = styled.input`
 `;
 
 class TodoItem extends Component {
@@ -48,8 +42,8 @@ class TodoItem extends Component {
       titleVar = <TitleHeader>{title}</TitleHeader>
       contentVar = <CustomP>{content}</CustomP>
     } else {
-      titleVar = <TitleHeaderInput type="text" defaultValue={title} className="title-input" />
-      contentVar = <ContentPInput type="text" defaultValue={content} className="content-input" />
+      titleVar = <input type="text" defaultValue={title} className="title-input" />
+      contentVar = <input type="text" defaultValue={content} className="content-input" />
     }
 
     let deadlineDiv;
