@@ -95,16 +95,7 @@ public class MainRestController {
       return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
-    if (patchingDto.getTitle() != null && patchingDto.getContents() != null) {
-      mainService.modifyTitleContents(id, patchingDto.getTitle(), patchingDto.getContents());
-    }
-    if (patchingDto.getIsChecked() != null) {
-      mainService.modifyIsChecked(id, patchingDto.getIsChecked());
-    }
-    if (patchingDto.getPriority() != null) {
-      mainService.modifyPriority(id, patchingDto.getPriority());
-    }
-
+    mainService.modifyTodoItem(id, patchingDto);
     return new ResponseEntity<>(todoItem, HttpStatus.OK);
   }
 
