@@ -4,7 +4,6 @@ import com.example.todolist.domain.TodoItem;
 import com.example.todolist.dto.PatchingDto;
 import com.example.todolist.repository.TodoItemRepository;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,12 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 2019-03-17
  */
 @Service
-@Slf4j
-public class MainService {
+public class TodoItemService {
 
   private TodoItemRepository todoItemRepository;
 
-  public MainService(TodoItemRepository todoItemRepository) {
+  public TodoItemService(TodoItemRepository todoItemRepository) {
     this.todoItemRepository = todoItemRepository;
   }
 
@@ -38,39 +36,7 @@ public class MainService {
   }
 
   @Transactional
-  public TodoItem modifyTitleContents(Long id, String title, String contents) {
-    TodoItem todoItem = todoItemRepository.getOne(id);
-    todoItem.setTitle(title);
-    todoItem.getTodoItemContent().setContents(contents);
-
-    return todoItemRepository.save(todoItem);
-  }
-
-  @Transactional
-  public TodoItem modifyIsChecked(Long id, String isCompleted) {
-    TodoItem todoItem = todoItemRepository.getOne(id);
-    boolean isCompletedBool = isCompleted.equals("true");
-    todoItem.setCompleted(isCompletedBool);
-
-    return todoItemRepository.save(todoItem);
-  }
-
-  @Transactional
-  public TodoItem modifyPriority(Long id, int newPriority) {
-    TodoItem todoItem = todoItemRepository.getOne(id);
-    todoItem.setPriority(newPriority);
-
-    return todoItemRepository.save(todoItem);
-  }
-
-  @Transactional
-  public void removeTodoItem(Long id) {
-    todoItemRepository.deleteById(id);
-  }
-
-  @Transactional
   public TodoItem modifyTodoItem(Long id, PatchingDto patchingDto) {
-
     TodoItem todoItem = todoItemRepository.getOne(id);
 
     if (patchingDto.getTitle() != null && patchingDto.getContents() != null) {
@@ -86,5 +52,10 @@ public class MainService {
     }
 
     return todoItemRepository.save(todoItem);
+  }
+
+  @Transactional
+  public void removeTodoItem(Long id) {
+    todoItemRepository.deleteById(id);
   }
 }

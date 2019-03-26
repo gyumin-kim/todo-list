@@ -4,10 +4,9 @@ import com.example.todolist.domain.TodoItem;
 import com.example.todolist.domain.TodoItemContent;
 import com.example.todolist.dto.InputDto;
 import com.example.todolist.dto.PatchingDto;
-import com.example.todolist.service.MainService;
+import com.example.todolist.service.TodoItemService;
 import java.time.LocalDateTime;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +28,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
-@Slf4j
 public class MainRestController {
 
-  private MainService mainService;
+  private TodoItemService todoItemService;
 
-  public MainRestController(MainService mainService) {
-    this.mainService = mainService;
+  public MainRestController(TodoItemService todoItemService) {
+    this.todoItemService = todoItemService;
   }
 
   /**
@@ -60,7 +58,7 @@ public class MainRestController {
         .priority(inputDto.getPriority())
         .build();
 
-    return new ResponseEntity<>(mainService.addTodoItem(todoItem), HttpStatus.CREATED);
+    return new ResponseEntity<>(todoItemService.addTodoItem(todoItem), HttpStatus.CREATED);
   }
 
   /**
@@ -71,7 +69,7 @@ public class MainRestController {
    */
   @GetMapping("/items/{priority}")
   public ResponseEntity<?> loadTodoItemsPriority(@PathVariable String priority) {
-    List<TodoItem> items = mainService.getTodoItemsPriority(Integer.parseInt(priority));
+    List<TodoItem> items = todoItemService.getTodoItemsPriority(Integer.parseInt(priority));
 
     if (items != null) {
       return new ResponseEntity<>(items, HttpStatus.OK);
@@ -90,12 +88,12 @@ public class MainRestController {
   public ResponseEntity<?> patchTodoItemPriority(@PathVariable Long id,
       @RequestBody PatchingDto patchingDto) {
 
-    TodoItem todoItem = mainService.getTodoItemId(id);
+    TodoItem todoItem = todoItemService.getTodoItemId(id);
     if (todoItem == null) {
       return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
-    mainService.modifyTodoItem(id, patchingDto);
+    todoItemService.modifyTodoItem(id, patchingDto);
     return new ResponseEntity<>(todoItem, HttpStatus.OK);
   }
 
@@ -109,7 +107,7 @@ public class MainRestController {
   public void deleteTodoItem(@PathVariable Long id) {
 
     try {
-      mainService.removeTodoItem(id);
+      todoItemService.removeTodoItem(id);
     } catch (EmptyResultDataAccessException e) {
       e.printStackTrace();
     }
